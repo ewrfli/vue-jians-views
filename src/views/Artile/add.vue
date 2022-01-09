@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>添加文章</div>
 </template>
 
 <script>
@@ -11,5 +11,5 @@ export default {
 }
 </script>
 
-<style type="text/css" scoped>
+<style scoped lang="less">
 </style>
