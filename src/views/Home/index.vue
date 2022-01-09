@@ -11,7 +11,7 @@
         </el-header>
         <el-container>
             <el-aside width="200px">
-                <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
+                <el-menu background-color="#40454b" text-color="#fff" active-text-color="#ffd04b" router>
                     <el-submenu index="/admin/user">
                         <template slot="title">
                             <i class="el-icon-s-custom"></i>
