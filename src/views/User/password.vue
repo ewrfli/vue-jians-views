@@ -1,5 +1,16 @@
 <template>
-  <div>修改密码</div>
+  <div>
+    <el-form>
+      <el-form-item label="ID">
+      </el-form-item>
+      <el-form-item label="用户名">
+      </el-form-item> 
+      <el-form-item label="密码">
+      </el-form-item>
+      <el-form-item label="权限">
+      </el-form-item>
+    </el-form>  
+  </div>
 </template>
 
 <script>
