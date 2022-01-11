@@ -4,7 +4,7 @@
     <el-form label-position="left" label-width="70px">
       <el-form-item label="头像" class="avatar-item">
         <div class="avatar-div">
-              <img :src="imgPath" alt="" class="small-img" v-if="imgPath">
+              <img :src="form.avatar" alt="" class="small-img" v-if="form.avatar">
               <div class="null-img" v-else></div>
               <el-upload
                 action="http://localhost:3000/upload/img"
@@ -12,7 +12,6 @@
                 :headers="uploadHeader"
                 :on-success="onSuccess"
                 :show-file-list="false"
-                
               >
                 <el-button>上传</el-button>
               </el-upload>
@@ -21,33 +20,33 @@
 
       <el-form-item label="用户名">
         <el-col :span="6">
-          <el-input placeholder="请输入用户名"></el-input>
+          <el-input v-model="form.username" disabled placeholder="请输入用户名"></el-input>
         </el-col>
       </el-form-item> 
       <el-form-item label="性别">
         <el-col :span="6">
-          <el-radio label="男">男</el-radio>
-          <el-radio label="女">女</el-radio>
-          <el-radio label="保密">保密</el-radio>
+          <el-radio v-model="form.sex" label="男">男</el-radio>
+          <el-radio v-model="form.sex" label="女">女</el-radio>
+          <el-radio v-model="form.sex" label="保密">保密</el-radio>
         </el-col>        
       </el-form-item>
       <el-form-item label="描述">
         <el-col :span="6">
-          <el-input placeholder="请输入描述" type="textarea" rows="3"></el-input>
+          <el-input v-model="form.desc" placeholder="请输入描述" type="textarea" rows="3"></el-input>
         </el-col>      
       </el-form-item> 
       <el-form-item label="手机">
         <el-col :span="6">
-          <el-input placeholder="请输入手机"></el-input>
+          <el-input v-model="form.phone" placeholder="请输入手机"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="邮箱">
         <el-col :span="6">
-          <el-input placeholder="请输入邮箱"></el-input>
+          <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="提交">
-        <el-button type="primary">提交修改</el-button>
+        <el-button type="primary" @click="save">提交修改</el-button>
       </el-form-item>
     </el-form>
 
@@ -62,15 +61,42 @@ export default {
   data () {
     return {
       uploadHeader: {
-        authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InhpYW9tIiwiX2lkIjoiNjFkYmQzNWZlOTA3YTYxMjU5MjYwOGY0IiwiaWF0IjoxNjQxODA2MzcxLCJleHAiOjE2NDI0MTExNzF9.wM-2Iqvtwlb7qM6QBGtq0-_688BDoNAlEkTWywQnwgE"
+        authorization: "Bearer " + localStorage.token,
       },
-      imgPath: ''
+      imgPath: '',
+      form: {
+        _id: '',
+        avatar: '',
+        username: '',
+        sex: '男',
+        desc: '',
+        phone: '',
+        email: ''
+
+      }
     }
+  },
+  created(){
+    this.form = this.$store.state.user
   },
   methods: {
     onSuccess(res){
       console.log(res)
-      this.imgPath = res.path
+      this.form.avatar = res.path
+    },
+    save(){
+      console.log('this.form',this.form)
+      this.$http({
+          path: '/users/dataupdate',
+          method: 'put',
+          params: this.form
+      }).then((res) => {
+          console.log('dataupdate res',res)
+          this.$message({
+          message: res.data.msg,
+          type: res.data.code === 200 ? "success" : "error",
+          });
+      });
     }
   },
 }

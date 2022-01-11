@@ -6,9 +6,13 @@ let instance = axios.create({
 
 //请求拦截器
 instance.interceptors.request.use(config => {
+    if (localStorage.token) {
+        config.headers.authorization = 'Bearer ' + localStorage.token;
+    }
     return config
 },err => {
     console.error('请求失败', err)
+    return Promise.reject(err);
 })
 
 // 添加响应拦截器
