@@ -7,7 +7,7 @@
               <img :src="form.avatar" alt="" class="small-img" v-if="form.avatar">
               <div class="null-img" v-else></div>
               <el-upload
-                action="http://localhost:3000/upload/img"
+                action="/upload/img"
                 name="myfile"
                 :headers="uploadHeader"
                 :on-success="onSuccess"
@@ -63,7 +63,7 @@ export default {
       uploadHeader: {
         authorization: "Bearer " + localStorage.token,
       },
-      imgPath: '',
+      imgUpPath: '',
       form: {
         _id: '',
         avatar: '',
@@ -78,11 +78,12 @@ export default {
   },
   created(){
     this.form = this.$store.state.user
+    this.imgUpPath = 'http://localhost:3000'
   },
   methods: {
     onSuccess(res){
       console.log(res)
-      this.form.avatar = res.path
+      this.form.avatar = res.path//上传成功显示图片预览
     },
     save(){
       console.log('this.form',this.form)
