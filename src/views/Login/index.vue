@@ -4,16 +4,16 @@
             <div class="login-title">jians后台管理系统</div>
             <el-form>
                 <el-form-item>
-                    <el-input placeholder="请输入用户名" v-model="name"></el-input>
+                    <el-input placeholder="请输入用户名" v-model="username"></el-input>
                 </el-form-item>
 
                 <el-form-item>
-                    <el-input type="password" placeholder="请输入密码" v-model="password"></el-input>
+                    <el-input type="password" placeholder="请输入密码" v-model="pwd"></el-input>
                 </el-form-item>
 
                 <el-form-item class="button-div">
-                    <el-button type="primary">登录</el-button>
-                    <el-button type="success">注册</el-button>
+                    <el-button type="primary" @click="clickLogin">登录</el-button>
+                    <el-button type="success" @click="clickRegister">注册</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -24,11 +24,50 @@
 export default {
     data() {
         return {
-          name: '',
-          password: ''
+            username: '',
+            pwd: '',
+            state: true, //按钮状态，true为登录，false为注册
         };
     },
-    methods: {},
+    methods: {
+        clickLogin(){
+            this.state = true
+            this.logApi()
+        },
+        clickRegister(){
+            this.state = false
+            this.logApi()
+        },
+        logApi(){
+            if(this.username !=='' && this.pwd !==''){
+                this.$http({
+                    path: this.state ? "/users/login" : "/users/register",
+                    method: "post",
+                    params: {
+                    username: this.username,
+                    pwd: this.pwd,
+                    },
+                }).then((res) => {
+                    console.log('login res',res)
+                    if (res.data.code === 200 && this.state) {
+                    localStorage.token = res.data.token;
+                    this.$router.push({
+                        path: "/admin",
+                    });
+                    }
+                    this.$message({
+                    message: res.data.msg,
+                    type: res.data.code === 200 ? "success" : "error",
+                    });
+                });
+            }else{
+                this.$message({
+                message: '请输入用户名密码',
+                type:  "error",
+                });
+            }
+        }
+    },
 };
 </script>
 

@@ -3,10 +3,10 @@
         <el-header>
             <div class="sys-title">jians后台管理系统</div>
             <div class="header-right">
-                <span>首页</span>
+                <span @click="goWeb()">首页</span>
                 <i class="el-icon-location"></i>
                 <span>admin</span>
-                <span>退出</span>
+                <span @click="exit()">退出</span>
             </div>
         </el-header>
         <el-container>
@@ -69,7 +69,22 @@ export default {
     data() {
         return {};
     },
-    methods: {},
+    methods: {
+        exit() {
+            //退出系统
+            localStorage.clear();
+            this.$router.push({
+                path: "/login",
+            });
+        },
+        goWeb() {
+            this.$router.push({
+                path: "/",
+            });
+        }
+    }
+
+  
 };
 </script>
 
