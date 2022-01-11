@@ -8,11 +8,11 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-input type="password" placeholder="请输入密码" v-model="pwd"></el-input>
+                    <el-input type="password" placeholder="请输入密码" v-model="pwd" @keyup.enter.native="clickLogin"></el-input>
                 </el-form-item>
 
                 <el-form-item class="button-div">
-                    <el-button type="primary" @click="clickLogin">登录</el-button>
+                    <el-button type="primary" @click="clickLogin" @keyup.enter.native="clickLogin">登录</el-button>
                     <el-button type="success" @click="clickRegister">注册</el-button>
                 </el-form-item>
             </el-form>
@@ -55,10 +55,6 @@ export default {
                         path: "/admin",
                     });
                     }
-                    this.$message({
-                    message: res.data.msg,
-                    type: res.data.code === 200 ? "success" : "error",
-                    });
                 });
             }else{
                 this.$message({

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Message} from 'element-ui';
 const baseURL = 'http://localhost:3000'
 let instance = axios.create({
     baseURL: baseURL,
@@ -11,18 +12,32 @@ instance.interceptors.request.use(config => {
         config.headers.authorization = 'Bearer ' + localStorage.token;
     }
     return config
-},err => {
-    console.error('请求失败', err)
-    return Promise.reject(err);
+},error => {
+    console.error('请求失败', error)
+    Message({
+        message: error,
+        type: "error",
+    });
+    return Promise.reject(error);
 })
 
 // 添加响应拦截器
 instance.interceptors.response.use(response => {
     // 对响应数据做点什么
+    if(response){ //response.data.msg !== '认证成功'
+        Message({
+            message: response.data.msg,
+            type: response.data.code === 200 ? "success" : "error",
+        });
+    }
     return response;
   }, error => {
     // 对响应错误做点什么
-    console.error('请求失败', err)
+    console.error('失败', error)
+    Message({
+        message: error,
+        type: "error",
+    });
     return Promise.reject(error);
   });
 

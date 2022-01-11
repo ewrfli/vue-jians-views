@@ -93,10 +93,6 @@ export default {
           params: this.form
       }).then((res) => {
           console.log('dataupdate res',res)
-          this.$message({
-          message: res.data.msg,
-          type: res.data.code === 200 ? "success" : "error",
-          });
       });
     }
   },
