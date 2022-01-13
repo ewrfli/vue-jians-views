@@ -58,7 +58,7 @@
                 <el-main>
                     <router-view></router-view>
                 </el-main>
-                <el-footer>Footer</el-footer>
+                <el-footer><div class="foot">Form: https://github.com/ewrfli/vue-jians-views</div></el-footer>
             </el-container>
         </el-container>
     </el-container>
@@ -112,6 +112,13 @@ export default {
     }
     .el-footer {
         background-color: #545c64;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .foot {
+        color: #fff;
     }
 }
 </style>

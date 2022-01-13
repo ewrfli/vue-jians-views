@@ -8,6 +8,7 @@ let instance = axios.create({
 
 //请求拦截器
 instance.interceptors.request.use(config => {
+    console.log('请求拦截器',config)
     if (localStorage.token) {
         config.headers.authorization = 'Bearer ' + localStorage.token;
     }
@@ -23,8 +24,9 @@ instance.interceptors.request.use(config => {
 
 // 添加响应拦截器
 instance.interceptors.response.use(response => {
+    console.log('响应拦截器',response)
     // 对响应数据做点什么
-    if(response){ //response.data.msg !== '认证成功'
+    if(response && response.data.msg !== '认证成功' ){ //response.data.msg !== '认证成功'
         Message({
             message: response.data.msg,
             type: response.data.code === 200 ? "success" : "error",
