@@ -69,6 +69,22 @@ const routes = [
         }
       },
       {
+        path: '/admin/comment/add',
+        name: 'addComment',
+        component: () => import('@/views/Comment/add.vue'), 
+        meta: {
+          title: '添加评论'
+        }
+      },
+      {
+        path: '/admin/comment/update',
+        name: 'Comment',
+        component: () => import('@/views/Comment/update.vue'), 
+        meta: {
+          title: '更新评论'
+        }
+      },
+      {
         path: '/admin/fans',
         name: 'Fans',
         component: () => import('@/views/Fans/index.vue'), 

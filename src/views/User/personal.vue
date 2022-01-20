@@ -7,7 +7,7 @@
               <img :src="form.avatar" alt="" class="small-img" v-if="form.avatar">
               <div class="null-img" v-else></div>
               <el-upload
-                action="/upload/img"
+                :action="imgUpPath"
                 name="myfile"
                 :headers="uploadHeader"
                 :on-success="onSuccess"
@@ -78,7 +78,7 @@ export default {
   },
   created(){
     this.form = this.$store.state.user
-    this.imgUpPath = 'http://localhost:3000'
+    this.imgUpPath = 'http://localhost:3000'+'/upload/img'
   },
   methods: {
     onSuccess(res){

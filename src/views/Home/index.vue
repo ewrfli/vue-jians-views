@@ -31,12 +31,15 @@
                         <el-menu-item index="/admin/article/update">更新文章</el-menu-item>
                     </el-submenu>
 
-                    <el-menu-item index="/admin/comment">
+                    <el-submenu index="/admin/comment">
                         <template slot="title">
                             <i class="el-icon-more"></i>
                             <span>评论管理</span>
                         </template>
-                    </el-menu-item>
+                        <el-menu-item index="/admin/comment">评论列表</el-menu-item>
+                        <el-menu-item index="/admin/comment/add">添加评论</el-menu-item>
+                        <el-menu-item index="/admin/comment/update">更新评论</el-menu-item>
+                    </el-submenu>
 
                     <el-menu-item index="/admin/fans">
                         <template slot="title">
