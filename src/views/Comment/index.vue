@@ -161,6 +161,7 @@ export default {
       }).then(res=>{
         if(res.data.code === 200){
           this.dialogFormVisible = false
+          this.getData()
         }
       })
     },
@@ -176,6 +177,7 @@ export default {
           this.dialogFormVisible = false
           console.log('更新成功')
           this.isUpdate = false
+          this.getData()
         }
       })
     }

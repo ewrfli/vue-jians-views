@@ -23,7 +23,9 @@
           <div id="editor"></div>
         </el-form-item>
         <el-form-item label="文章类别">
-          <el-input v-model="form.stemfrom" clearable="" placeholder="请输入文章类别"></el-input>
+          <el-col :span="6">
+            <el-input v-model="form.stemfrom" clearable="" placeholder="请输入文章类别"></el-input>
+          </el-col>
         </el-form-item>
         <el-form-item label="文章ID">
           <el-col :span="6">
