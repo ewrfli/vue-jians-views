@@ -7,9 +7,8 @@
         <el-form-item label="文章内容">
           <div id="editor"></div>
         </el-form-item>
-        <el-form-item label="文章来源">
-          <el-radio v-model="form.stemfrom" label="原创">原创</el-radio>
-          <el-radio v-model="form.stemfrom" label="转载">转载</el-radio>
+        <el-form-item label="文章类别">
+          <el-input v-model="form.stemfrom" clearable="" placeholder="请输入文章类别"></el-input>
         </el-form-item>
         <el-form-item label="文章ID">
           <el-col :span="6">

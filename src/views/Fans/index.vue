@@ -19,7 +19,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="addFans">确 定</el-button>
         </div>
       </el-dialog>
     
@@ -31,8 +31,8 @@
       <el-table-column label="关注时间：" prop="createTime"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button @click="update(scope.row)" type="primary" size="mini">编辑</el-button>
-          <el-button @click="del(scope.row)" type="danger" size="mini">删除</el-button>
+          <!-- <el-button @click="update(scope.row)" type="primary" size="mini">编辑</el-button> -->
+          <el-button @click="del(scope.row)" type="danger" size="mini">取关</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -57,7 +57,7 @@ export default {
       page: 1,
       pageSize: 0,
       count: 0,
-      dialogFormVisible: false,
+      dialogFormVisible: false,//dialog显示
       form: {
         username: '',
         author: '',
@@ -68,6 +68,9 @@ export default {
   },
   created(){
     this.getData()
+    //初始值
+    let date = new Date()
+    this.form.createTime = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   },
   methods: {
     getData(){
@@ -89,7 +92,33 @@ export default {
       this.page = page
       this.getData()
     },
-
+    addFans(){
+      console.log('xxx',this.form)
+      this.$http({
+        path: '/fans/follow',
+        method: 'post',
+        params: {
+          ...this.form
+        }
+      }).then(res=>{
+        this.dialogFormVisible = false
+        this.getData()
+      })
+    },
+    del(rowData){
+      console.log('scope.row',rowData)
+      // let _this = this
+      this.$http({
+        path: '/fans/unfollow',
+        method: 'post',
+        params: {
+          username: rowData.username,
+          author: rowData.author
+        }
+      }).then(res=>{
+        this.getData()
+      })
+    }
   }
 }
 </script>
