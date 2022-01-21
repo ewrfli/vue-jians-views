@@ -11,6 +11,12 @@ const routes = [
   
   },
   {
+    path: '/detail',
+    name: 'Web',
+    component: () => import('@/views/Web/detail.vue')           
+  
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Login'), 

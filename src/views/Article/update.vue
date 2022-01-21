@@ -1,6 +1,21 @@
 <template>
   <div>
       <el-form label-width="100px">
+        <el-form-item label="封面" class="avatar-item">
+          <div class="avatar-div">
+                <img :src="form.coverImg" alt="" class="small-img" v-if="form.coverImg">
+                <div class="null-img" v-else></div>
+                <el-upload
+                  :action="imgUpPath"
+                  name="coverFile"
+                  :headers="uploadHeader"
+                  :on-success="onSuccess"
+                  :show-file-list="false"
+                >
+                  <el-button>修改</el-button>
+                </el-upload>
+          </div>
+        </el-form-item>
         <el-form-item label="文章标题">
           <el-input v-model="form.title" clearable="" placeholder="请输入文章标题"></el-input>
         </el-form-item>
@@ -38,6 +53,10 @@ import Editor from 'wangeditor'
 export default {
   data () {
     return {
+      uploadHeader: {
+        authorization: "Bearer " + localStorage.token,
+      },
+      imgUpPath: '',//封面上传地址
       form: {
         _id: '',
         id: '',
@@ -45,7 +64,8 @@ export default {
         title: '',
         content: '',
         stemfrom: '原创',
-        author: this.$store.state.user.username
+        author: this.$store.state.user.username,
+        coverImg: ''
       },
       editor: null
     }
@@ -60,6 +80,8 @@ export default {
     }
   },
   created(){
+    this.imgUpPath = 'http://localhost:3000'+'/upload/cover/img'
+
     let _id = this.$route.query._id
     console.log(_id)
       this.$http({
@@ -101,6 +123,10 @@ export default {
       this.form.createTime = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   },
   methods: {
+    onSuccess(res){
+      console.log(res)
+      this.form.coverImg = res.path//上传成功显示图片预览
+    },
     submit(){
        //获取文章内容
       let content = this.editor.txt.html()

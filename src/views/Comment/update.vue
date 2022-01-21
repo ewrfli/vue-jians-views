@@ -77,7 +77,7 @@ export default {
       let params = {...this.form}
       console.log('params',params)
       this.$http({
-        path: '/comment/add',
+        path: '/comment/update',
         method: 'post',
         params: params
       }).then(res=>{

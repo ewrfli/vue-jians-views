@@ -78,8 +78,8 @@ export default {
         path: '/fans/findall',
         method: 'post',
         params: {
-          page: this.page,
-          author: this.$store.state.user.username
+          page: this.page
+          // author: this.$store.state.user.username
         }
       }).then(res=>{
         this.fans = res.data.result
