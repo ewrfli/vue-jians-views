@@ -19,6 +19,9 @@
         <el-form-item label="文章标题">
           <el-input v-model="form.title" clearable="" placeholder="请输入文章标题"></el-input>
         </el-form-item>
+        <el-form-item label="文章描述">
+          <el-input v-model="form.desc" clearable="" placeholder="请输入文章描述"></el-input>
+        </el-form-item>
         <el-form-item label="文章内容">
           <div id="editor"></div>
         </el-form-item>
@@ -62,6 +65,7 @@ export default {
         id: '',
         createTime: '',
         title: '',
+        desc: '',
         stemfrom: '原创',
         author: this.$store.state.user.username,
         coverImg: ''
