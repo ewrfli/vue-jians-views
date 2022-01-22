@@ -20,7 +20,12 @@
                         <el-menu-item index="/admin/user/personal">个人资料</el-menu-item>
                         <el-menu-item index="/admin/user/password">修改密码</el-menu-item>
                     </el-submenu>
-
+                    <el-menu-item index="/admin/userManage">
+                        <template slot="title">
+                            <i class="el-icon-star-on"></i>
+                            <span>用户管理</span>
+                        </template>
+                    </el-menu-item>
                     <el-submenu index="/admin/article">
                         <template slot="title">
                             <i class="el-icon-document"></i>

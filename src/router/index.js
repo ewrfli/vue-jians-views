@@ -27,6 +27,14 @@ const routes = [
     component: () => import('@/views/Home'),    
     children: [
       {
+        path: '/admin/userManage',
+        name: 'userManage',
+        component: () => import('@/views/UserManage/index.vue'),
+        meta: {
+          title: '用户管理'
+        }
+      },
+      {
         path: '/admin/user/personal',
         name: 'UserPersonal',
         component: () => import('@/views/User/personal.vue'),

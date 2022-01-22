@@ -1,25 +1,34 @@
 <template>
   <div>
       <div>
-        <span style="margin-right: 20px;">评论</span> 
+        <span style="margin-right: 20px;">用户列表</span> 
         <!-- Form -->
-        <el-button @click="dialogFormVisible = true">添加评论</el-button>
-        <el-dialog title="添加评论" :visible.sync="dialogFormVisible">
+        <el-button @click="dialogFormVisible = true">添加用户</el-button>
+        <el-dialog title="添加粉丝" :visible.sync="dialogFormVisible">
           <el-form :model="form">
-            <el-form-item label="评论者" :label-width="formLabelWidth">
+            <el-form-item label="用户名" :label-width="formLabelWidth">
               <el-input v-model="form.username" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="评论内容" :label-width="formLabelWidth">
-              <el-input v-model="form.commentContent" autocomplete="off"></el-input>
+            <el-form-item label="密码" :label-width="formLabelWidth">
+              <el-input v-model="form.pwd" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="文章标题" :label-width="formLabelWidth">
-              <el-input v-model="form.articleTitle" autocomplete="off"></el-input>
+             <el-form-item label="头像" :label-width="formLabelWidth">
+              <el-input v-model="form.avatar" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="文章作者" :label-width="formLabelWidth">
-              <el-input v-model="form.articleAuthor" autocomplete="off"></el-input>
+            <el-form-item label="权限" :label-width="formLabelWidth">
+              <el-input v-model="form.power" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="评论时间" :label-width="formLabelWidth">
-              <el-input v-model="form.commentCreateTime" autocomplete="off"></el-input>
+            <el-form-item label="性别" :label-width="formLabelWidth">
+              <el-input v-model="form.sex" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="描述" :label-width="formLabelWidth">
+              <el-input v-model="form.desc" autocomplete="off"></el-input>
+            </el-form-item>
+             <el-form-item label="手机" :label-width="formLabelWidth">
+              <el-input v-model="form.phone" autocomplete="off"></el-input>
+            </el-form-item>
+             <el-form-item label="邮箱" :label-width="formLabelWidth">
+              <el-input v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
 
           </el-form>
@@ -32,11 +41,13 @@
       </div>
 
       <el-table :data="comments" style="width: 100%">
-        <el-table-column label="用户" prop="username"></el-table-column>
-        <el-table-column label="文章作者" prop="articleAuthor"></el-table-column>
-        <el-table-column label="文章标题" prop="articleTitle"></el-table-column>
-        <el-table-column label="评论内容" prop="commentContent"></el-table-column>
-        <el-table-column label="评论时间：" prop="commentCreateTime"></el-table-column>
+        <el-table-column label="用户名" prop="username"></el-table-column>
+        <el-table-column label="密码" prop="pwd"></el-table-column>
+        <el-table-column label="权限" prop="power"></el-table-column>
+        <!-- <el-table-column label="头像" prop="avatar"></el-table-column> -->
+        <el-table-column label="性别" prop="sex"></el-table-column>
+        <el-table-column label="手机" prop="phone"></el-table-column>
+        <el-table-column label="邮箱" prop="email"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button @click="update(scope.row)" type="primary" size="mini">编辑</el-button>
@@ -46,13 +57,13 @@
       </el-table>
 
       <!-- 分页 -->
-      <el-pagination 
+      <!-- <el-pagination 
         background
         layout="prev,pager,next"
         :total="count"
         :page-size="pageSize"
         :current-page="page"
-        @current-change="changePage"></el-pagination>
+        @current-change="changePage"></el-pagination> -->
   </div>
 </template>
 
@@ -66,12 +77,16 @@ export default {
       count: 0,
       dialogFormVisible: false,//dialog显示
       form: {//dialog 数据
-        username: this.$store.state.user.username, //评论者
-        articleTitle: '',
-        articleAuthor: '',
-        commentContent: '',
-        commentCreateTime: '',
-        // author: this.$store.state.user.username
+        _id: '',
+        username: '', //评论者
+        pwd: '',
+        id: '',
+        power: '',
+        avatar: '',
+        sex: '',
+        desc: '',
+        phone: '',
+        email:''
       },
       formLabelWidth: '70px',
       isUpdate: false
@@ -84,11 +99,16 @@ export default {
         let date = new Date()
         let CreateTime = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
         this.form = {
-          username: this.$store.state.user.username, //评论者
-          articleTitle: '',
-          articleAuthor: '',
-          commentContent: '',
-          commentCreateTime: CreateTime,
+          _id: '',
+          username: '', //评论者
+          pwd: '',
+          id: '',
+          power: '',
+          avatar: '',
+          sex: '',
+          desc: '',
+          phone: '',
+          email:''
         }
       }
     }
@@ -102,24 +122,24 @@ export default {
   methods: {
     getData(){
       this.$http({
-        path: '/comment/findall',
-        method: 'post',
-        params: {
-          page: this.page,
-          // articleAuthor: this.$store.state.user.username
-        }
+        path: '/users/findall',
+        method: 'get',
+        // params: {
+        //   page: this.page,
+        //   // articleAuthor: this.$store.state.user.username
+        // }
       }).then(res=>{
         console.log(res.data.result)
-        this.comments = res.data.result
+        this.comments = res.data.reslut
         this.page = res.data.page
         this.pageSize = res.data.pageSize
         this.count = res.data.count
       })
     },
-    changePage(page){
-      this.page = page
-      this.getData()
-    },
+    // changePage(page){
+    //   this.page = page
+    //   this.getData()
+    // },
         del(row){
       console.log('del',row)
       this.$confirm('确定要删除吗？','提示',{
@@ -128,7 +148,7 @@ export default {
         type: 'warning'
       }).then(()=>{
         this.$http({
-          path: '/comment/del',
+          path: '/users/del',
           method: 'post',
           params: {
             _id: row._id
@@ -155,7 +175,7 @@ export default {
       let params = {...this.form}
       console.log('params',params)
       this.$http({
-        path: '/comment/add',
+        path: '/users/add',
         method: 'post',
         params: params
       }).then(res=>{
@@ -169,8 +189,8 @@ export default {
       let params = {...this.form}
       console.log('params',params)
       this.$http({
-        path: '/comment/update',
-        method: 'post',
+        path: '/users/dataupdate',
+        method: 'put',
         params: params
       }).then(res=>{
         if(res.data.code === 200){
