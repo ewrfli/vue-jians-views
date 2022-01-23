@@ -112,7 +112,7 @@ export default {
         }
     }
     .box-card {
-        background-color: pink;
+        // background-color: pink;
         width: 100%;
         display: flex;
         flex-direction: row;
