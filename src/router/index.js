@@ -92,7 +92,7 @@ const routes = [
       },
       {
         path: '/admin/comment/update',
-        name: 'Comment',
+        name: 'updateComment',
         component: () => import('@/views/Comment/update.vue'), 
         meta: {
           title: '更新评论'

@@ -11,7 +11,7 @@
                 >
                 </el-option>
             </el-select>
-            <el-select v-model="stemfromValue" filterable placeholder="请选择来源">
+            <el-select v-model="stemfromValue" filterable placeholder="请选择来源" @change="stemfromOpFn(stemfromValue)">
                 <el-option
                     v-for="item in stemfromOptions"
                     :key="item.label"
@@ -104,7 +104,7 @@ export default {
         getData(param) {
           let argument={}
             if(param){
-              argument = {page: this.page,author: param}
+              argument = {page: this.page, ...param}
             }else{
               argument = {page: this.page}
             }
@@ -181,12 +181,20 @@ export default {
             this.page = page;
             this.getData();
         },
-        authorOpFn(value){
+        authorOpFn(value){ 
           console.log(value)
           if(value === '全部'){
             this.getData();
           }else{
-            this.getData(value);
+            this.getData({author: value});
+          }
+        },
+        stemfromOpFn(value){ //stemfromOpFn
+          console.log(value)
+          if(value === '全部'){
+            this.getData();
+          }else{
+            this.getData({stemfrom: value});
           }
         }
     },

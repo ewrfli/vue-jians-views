@@ -10,7 +10,7 @@
         </div>
         <el-row>
             <el-card v-for="item in articles">
-                <div class="box-card">
+                <div class="box-card" @click="toDetail(item.id)">
                     <div class="cover-img"><img :src="item.coverImg" alt="" /></div>
                     <div class="right">
                         <div class="cont">
@@ -28,13 +28,15 @@
                             <span class="comment"
                                 ><i class="el-icon-edit">{{ item.comment }}评论</i></span
                             >
-                            <span class="star"
+                            <span class="star" @click="onStar(item)"
                                 ><i class="el-icon-star-off">{{ item.star }}点赞</i></span
                             >
                             <span class="avatar" v-for="i in item.user"
                                 ><img :src="i.avatar" alt=""
                             /></span>
-                            <span style="margin-left: -10px;" class="author" v-for="i in item.user">作者{{ i.username }}</span>
+                            <span style="margin-left: -10px" class="author" v-for="i in item.user"
+                                >作者{{ i.username }}</span
+                            >
                         </div>
                     </div>
                 </div>
@@ -79,6 +81,16 @@ export default {
         this.getData();
     },
     methods: {
+        toDetail(id){
+            console.log('tod',id)
+            this.$router.push({
+                path: '/detail',
+                query: {
+                    id: id
+                },
+            });
+
+        },
         getData(param) {
             this.$http({
                 path: '/web/findall',
@@ -98,6 +110,18 @@ export default {
             this.page = page;
             this.getData();
         },
+        onStar(data){
+            console.log('stra',data._id)
+            this.$http({
+                path: '/fans/star',
+                method: 'post',
+                params: {
+                    _id: data._id,
+                },
+            }).then((res) => {
+                this.getData();
+            });
+        }
     },
 };
 </script>
@@ -171,7 +195,7 @@ export default {
                 }
                 span {
                     font-size: 10px;
-                    margin: 0 15px;
+                    margin: 0 8px;
                 }
             }
         }
