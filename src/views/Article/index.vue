@@ -23,6 +23,7 @@
         </div>
         <el-table :data="articles" style="width: 100%">
             <el-table-column label="文章标题" prop="title" width="100"></el-table-column>
+            <el-table-column label="文章id" prop="id" width="100"></el-table-column>
             <el-table-column label="作者" prop="author" width="80"></el-table-column>
             <el-table-column label="发布时间" prop="createTime" width="160"></el-table-column>
             <el-table-column label="类别" prop="stemfrom" width="80"></el-table-column>
@@ -31,6 +32,7 @@
             <el-table-column label="评论数" prop="comment" width="100"></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
+                    <el-button @click="star(scope.row)" type="" size="mini">点赞</el-button>
                     <el-button @click="update(scope.row)" type="primary" size="mini"
                         >编辑</el-button
                     >
@@ -81,6 +83,24 @@ export default {
         this.getAllStemfrom()
     },
     methods: {
+        star(row){
+            console.log('star',row)
+            this.$http({
+                path: '/fans/star',
+                method: 'post',
+                params: {
+                    _id: row._id,
+                },
+            }).then((res) => {
+                this.$message({
+                    message: res.data.msg,
+                    type: res.data.code === 200 ? 'success' : 'error',
+                });
+                if (res.data.code === 200) {
+                    this.getData();
+                }
+            });
+        },
         getData(param) {
           let argument={}
             if(param){

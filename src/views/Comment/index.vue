@@ -12,11 +12,14 @@
             <el-form-item label="评论内容" :label-width="formLabelWidth">
               <el-input v-model="form.commentContent" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="文章ID" :label-width="formLabelWidth">
+              <el-input v-model="form.articleId" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item label="文章标题" :label-width="formLabelWidth">
-              <el-input v-model="form.articleTitle" autocomplete="off"></el-input>
+              <el-input v-model="form.articleTitle" autocomplete="off"  placeholder="可以不填"></el-input>
             </el-form-item>
             <el-form-item label="文章作者" :label-width="formLabelWidth">
-              <el-input v-model="form.articleAuthor" autocomplete="off"></el-input>
+              <el-input v-model="form.articleAuthor" autocomplete="off"  placeholder="可以不填"></el-input>
             </el-form-item>
             <el-form-item label="评论时间" :label-width="formLabelWidth">
               <el-input v-model="form.commentCreateTime" autocomplete="off"></el-input>
@@ -33,6 +36,7 @@
 
       <el-table :data="comments" style="width: 100%">
         <el-table-column label="用户" prop="username"></el-table-column>
+        <el-table-column label="文章ID" prop="articleId"></el-table-column>
         <el-table-column label="文章作者" prop="articleAuthor"></el-table-column>
         <el-table-column label="文章标题" prop="articleTitle"></el-table-column>
         <el-table-column label="评论内容" prop="commentContent"></el-table-column>
@@ -69,6 +73,7 @@ export default {
         username: this.$store.state.user.username, //评论者
         articleTitle: '',
         articleAuthor: '',
+        articleId:'',
         commentContent: '',
         commentCreateTime: '',
         // author: this.$store.state.user.username
@@ -161,6 +166,7 @@ export default {
       }).then(res=>{
         if(res.data.code === 200){
           this.dialogFormVisible = false
+          // this.form = ""
           this.getData()
         }
       })

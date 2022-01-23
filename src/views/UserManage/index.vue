@@ -12,6 +12,9 @@
             <el-form-item label="密码" :label-width="formLabelWidth">
               <el-input v-model="form.pwd" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="ID" :label-width="formLabelWidth">
+              <el-input v-model="form.id" autocomplete="off"></el-input>
+            </el-form-item>
              <el-form-item label="头像" :label-width="formLabelWidth">
               <el-input v-model="form.avatar" autocomplete="off"></el-input>
             </el-form-item>
@@ -43,6 +46,7 @@
       <el-table :data="comments" style="width: 100%">
         <el-table-column label="用户名" prop="username"></el-table-column>
         <el-table-column label="密码" prop="pwd"></el-table-column>
+        <el-table-column label="ID" prop="id"></el-table-column>
         <el-table-column label="权限" prop="power"></el-table-column>
         <!-- <el-table-column label="头像" prop="avatar"></el-table-column> -->
         <el-table-column label="性别" prop="sex"></el-table-column>
@@ -117,7 +121,8 @@ export default {
     this.getData()
      //初始值
     let date = new Date()
-    this.form.commentCreateTime = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    this.form.id = Date.now()
+    // this.form.commentCreateTime = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   },
   methods: {
     getData(){
@@ -129,7 +134,7 @@ export default {
         //   // articleAuthor: this.$store.state.user.username
         // }
       }).then(res=>{
-        console.log(res.data.result)
+        console.log(res.data.reslut)
         this.comments = res.data.reslut
         this.page = res.data.page
         this.pageSize = res.data.pageSize
@@ -140,7 +145,7 @@ export default {
     //   this.page = page
     //   this.getData()
     // },
-        del(row){
+    del(row){
       console.log('del',row)
       this.$confirm('确定要删除吗？','提示',{
         confirmButtonText: '删除',
@@ -173,6 +178,11 @@ export default {
     },
     addComment(){
       let params = {...this.form}
+      for(let key in params){     // 删除对象中空属性值
+            if(params[key] == ''){
+                delete params[key]
+            }
+      }
       console.log('params',params)
       this.$http({
         path: '/users/add',

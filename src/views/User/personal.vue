@@ -23,6 +23,21 @@
           <el-input v-model="form.username" disabled placeholder="请输入用户名"></el-input>
         </el-col>
       </el-form-item> 
+      <el-form-item label="ID"> 
+        <el-col :span="6">
+          <el-input v-model="form.id"  placeholder="请输入ID"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-col :span="6">
+          <el-input v-model="form.pwd"  placeholder="请输入新密码"></el-input>
+        </el-col> 
+      </el-form-item>
+      <el-form-item label="权限">
+        <el-col :span="6">
+          <el-input v-model="form.power"  placeholder="请输入用户名权限"></el-input>
+        </el-col> 
+      </el-form-item>
       <el-form-item label="性别">
         <el-col :span="6">
           <el-radio v-model="form.sex" label="男">男</el-radio>
@@ -57,6 +72,7 @@
 </template>
 
 <script>
+import {Message} from 'element-ui';
 export default {
   data () {
     return {
@@ -68,6 +84,8 @@ export default {
         _id: '',
         avatar: '',
         username: '',
+        pwd: '',
+        power: '',
         sex: '男',
         desc: '',
         phone: '',
@@ -93,6 +111,10 @@ export default {
           params: this.form
       }).then((res) => {
           console.log('dataupdate res',res)
+           Message({
+            message: res.data.msg,
+            type: res.data.code === 200 ? "success" : "error",
+          });
       });
     }
   },

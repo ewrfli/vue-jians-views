@@ -17,8 +17,8 @@
                             <i class="el-icon-s-custom"></i>
                             <span>个人中心</span>
                         </template>
-                        <el-menu-item index="/admin/user/personal">个人资料</el-menu-item>
-                        <el-menu-item index="/admin/user/password">修改密码</el-menu-item>
+                        <el-menu-item index="/admin/user/personal">修改资料</el-menu-item>
+                        <!-- <el-menu-item index="/admin/user/password">修改密码</el-menu-item> -->
                     </el-submenu>
                     <el-menu-item index="/admin/userManage">
                         <template slot="title">
@@ -33,7 +33,7 @@
                         </template>
                         <el-menu-item index="/admin/article">文章列表</el-menu-item>
                         <el-menu-item index="/admin/article/add">发布文章</el-menu-item>
-                        <el-menu-item index="/admin/article/update">更新文章</el-menu-item>
+                        <!-- <el-menu-item index="/admin/article/update">更新文章</el-menu-item> -->
                     </el-submenu>
 
                     <el-submenu index="/admin/comment">
@@ -42,8 +42,8 @@
                             <span>评论管理</span>
                         </template>
                         <el-menu-item index="/admin/comment">评论列表</el-menu-item>
-                        <el-menu-item index="/admin/comment/add">添加评论</el-menu-item>
-                        <el-menu-item index="/admin/comment/update">更新评论</el-menu-item>
+                        <!-- <el-menu-item index="/admin/comment/add">添加评论</el-menu-item> -->
+                        <!-- <el-menu-item index="/admin/comment/update">更新评论</el-menu-item> -->
                     </el-submenu>
 
                     <el-menu-item index="/admin/fans">

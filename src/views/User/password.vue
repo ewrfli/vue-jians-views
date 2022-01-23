@@ -19,16 +19,7 @@
               </el-col>   
             </el-form-item>
            
-            <el-form-item label="密码">
-              <el-col :span="6">
-                <el-input v-model="form.pwd"  placeholder="请输入新密码"></el-input>
-              </el-col> 
-            </el-form-item>
-            <el-form-item label="权限">
-              <el-col :span="6">
-                <el-input v-model="form.power"  placeholder="请输入用户名权限"></el-input>
-              </el-col> 
-            </el-form-item>
+            
             <el-form-item label="提交">
               <el-button type="primary" @click="save">提交修改</el-button>
             </el-form-item>
