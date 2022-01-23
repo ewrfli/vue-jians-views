@@ -6,6 +6,22 @@
         <el-button @click="dialogFormVisible = true">添加用户</el-button>
         <el-dialog title="添加粉丝" :visible.sync="dialogFormVisible">
           <el-form :model="form">
+
+            <el-form-item label="头像" class="avatar-item" :label-width="formLabelWidth">
+              <div class="avatar-div">
+                    <img :src="form.avatar" alt="" class="small-img" v-if="form.avatar">
+                    <div class="null-img" v-else></div>
+                    <el-upload
+                      :action="imgUpPath"
+                      name="myfile"
+                      :headers="uploadHeader"
+                      :on-success="onSuccess"
+                      :show-file-list="false"
+                    >
+                      <el-button>上传</el-button>
+                    </el-upload>
+              </div>
+            </el-form-item>
             <el-form-item label="用户名" :label-width="formLabelWidth">
               <el-input v-model="form.username" autocomplete="off"></el-input>
             </el-form-item>
@@ -15,9 +31,7 @@
             <el-form-item label="ID" :label-width="formLabelWidth">
               <el-input v-model="form.id" autocomplete="off"></el-input>
             </el-form-item>
-             <el-form-item label="头像" :label-width="formLabelWidth">
-              <el-input v-model="form.avatar" autocomplete="off"></el-input>
-            </el-form-item>
+
             <el-form-item label="权限" :label-width="formLabelWidth">
               <el-input v-model="form.power" autocomplete="off"></el-input>
             </el-form-item>
@@ -75,6 +89,10 @@
 export default {
   data(){
     return {
+       uploadHeader: {
+        authorization: "Bearer " + localStorage.token,
+      },
+      imgUpPath: '',
       comments: [],
       page:1,
       pageSize: 0,
@@ -118,6 +136,7 @@ export default {
     }
   },
   created(){
+    this.imgUpPath = 'http://localhost:3000'+'/upload/img'
     this.getData()
      //初始值
     let date = new Date()
@@ -125,6 +144,10 @@ export default {
     // this.form.commentCreateTime = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   },
   methods: {
+    onSuccess(res){
+      console.log(res)
+      this.form.avatar = res.path//上传成功显示图片预览
+    },
     getData(){
       this.$http({
         path: '/users/findall',
