@@ -23,7 +23,10 @@
                                 ><i class="el-icon-edit">{{ item.comment }}评论</i></span
                             >
                             <span class="star" @click="onStar(item)"
-                                ><i class="el-icon-star-off">{{ item.star }}点赞</i></span
+                                >
+                                <i v-if="isStar" class="el-icon-star-on">{{ item.star }}点赞</i>
+                                <i v-else class="el-icon-star-off">{{ item.star }}点赞</i>
+                                </span
                             >
                             <span class="avatar" v-for="i in item.user"
                                 ><img :src="i.avatar" alt=""
@@ -60,6 +63,7 @@ export default {
                 coverImg: '',
             },
             id: '',
+            isStar: false
         };
     },
 
@@ -90,6 +94,7 @@ export default {
                 },
             }).then((res) => {
                 this.getData({ id: Number(this.id) });
+                this.isStar = true
             });
         },
     },

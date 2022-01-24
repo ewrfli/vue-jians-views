@@ -26,17 +26,15 @@
                                 ><i class="el-icon-tickets">{{ item.read }}阅读</i></span
                             >
                             <span class="comment"
-                                ><i class="el-icon-edit">{{ item.comment }}评论</i></span
-                            >
-                            <span class="star" @click="onStar(item)"
-                                ><i class="el-icon-star-off">{{ item.star }}点赞</i></span
-                            >
+                                ><i class="el-icon-edit">{{ item.comment }}评论</i></span>
+                            <span class="star" @click.stop="onStar(item),item.isStar=true"
+                                ><i v-if="item.isStar" class="el-icon-star-on">{{ item.star }}点赞</i>
+                                <i v-else class="el-icon-star-off">{{ item.star }}点赞</i>
+                            </span>
                             <span class="avatar" v-for="i in item.user"
                                 ><img :src="i.avatar" alt=""
                             /></span>
-                            <span style="margin-left: -10px" class="author" v-for="i in item.user"
-                                >作者{{ i.username }}</span
-                            >
+                            <span style="margin-left: -10px" class="author" v-for="i in item.user">作者{{ i.username }}</span>
                         </div>
                     </div>
                 </div>
@@ -60,7 +58,7 @@
 export default {
     data() {
         return {
-            articles: [],
+            articles: null,
             page: 1,
             pageSize: 0,
             count: 0,
@@ -74,7 +72,7 @@ export default {
                 author: '',
                 avatar: 'http://localhost:3000/uploads/20220112/myfile-1641917135372-sohucs.jpg',
                 coverImg: '',
-            },
+            }
         };
     },
     created() {
@@ -93,13 +91,17 @@ export default {
         },
         getData(param) {
             this.$http({
-                path: '/web/findall',
+                path: '/article/findall',///web/findall
                 method: 'post',
                 params: {
                     page: this.page,
                 },
             }).then((res) => {
                 this.articles = res.data.result;
+                this.articles.forEach(item => {
+                    item['isStar'] = false
+                    console.log('item',item)
+                });
                 this.page = res.data.page;
                 this.pageSize = res.data.pageSize;
                 this.count = res.data.count;
